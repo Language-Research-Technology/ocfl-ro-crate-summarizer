@@ -1,16 +1,14 @@
-const ocfl = require('ocfl-fs');
-const fs = require('fs')
-const {ROCrate} = require('ro-crate');
+const ocfl = require("@ocfl/ocfl-fs");
+const fs = require("fs")
+const { ROCrate } = require("ro-crate");
 const fileName = process.argv[3]
-const storage = ocfl.storage({root: process.argv[2], ocflVersion: '1.0'});
+const storage = ocfl.storage({ root: process.argv[2], ocflVersion: "1.0" });
 storage.load();
 
 // TODO - make this configurable 
 
-
-
 const expandType = [
-    'RepositoryCollection',
+    "RepositoryCollection",
     "RepositoryObject"
 ]
 
@@ -25,7 +23,7 @@ const props = [
     "memberOf"
 ]
 
-const header = [props.join(","), expandConformsTo.map((v)=>"conformsTo_" + v).join(","), expandType.map((v)=>"type_" + v).join(",")].join(",")
+const header = [props.join(","), expandConformsTo.map((v) => "conformsTo_" + v).join(","), expandType.map((v) => "type_" + v).join(",")].join(",")
 
 function formatVal(r, p) {
     // Format a property
@@ -35,11 +33,11 @@ function formatVal(r, p) {
     }
     return `"${r[p].toString().replace('"', '""')}"`
 }
-async function  main (){
+async function main() {
     fs.writeFileSync(fileName, header + "\n")
     for (let obj of await storage.objects()) {
         obj.load();
-        const crate = new ROCrate(JSON.parse(await obj.getAsString({logicalPath: "ro-crate-metadata.json"})))
+        const crate = new ROCrate(JSON.parse(await obj.getFile({ logicalPath: "ro-crate-metadata.json" }).asString()))
         const r = crate.rootDataset
         var line = "";
 
@@ -47,12 +45,12 @@ async function  main (){
             line += `${formatVal(r, p)},`
         }
         const conf = crate.utils.asArray(r["conformsTo"]).map((c) => {
-            return c["@id"] ?  c["@id"] : ""
+            return c["@id"] ? c["@id"] : ""
         });
         line += expandConformsTo.map((c) => conf.includes(c) ? "1" : "0").join(",") + ","
         const types = crate.utils.asArray(r["@type"]);
         line += expandType.map((t) => types.includes(t) ? "1" : "0").join(",")
-     
+
         fs.appendFileSync(fileName, line + "\n");
     }
 }

@@ -4,21 +4,8 @@ Script to provide a table of content/summary of an OCFL repository containing RO
 
 ## install
 
-This requires the test version of ocfl js
-
 ```
-##Get the oclf-js code
-git clone https://github.com/Arkisto-Platform/ocfl-js
-cd oclf-js
-git pull origin develop-alpha
-npm install .
-cd ocfl
-npm link
-cd ../ocfl-fs
-npm link
-cd ../oclf-tests
-npm link
-
+npm install
 ```
 
 ## usage
