@@ -17,8 +17,11 @@
   },
   "homepage": "https://github.com/Arkisto-Platform/ocfl-ro-crate-summarizer#readme",
   "dependencies": {
+    "@ocfl/ocfl-fs": "^0.2.0",
+    "better-sqlite3": "^8.5.0",
     "blake": "^1.0.1",
-    "blake2": "^4.1.1",
-    "ro-crate": "github:Arkisto-Platform/ro-crate-js#develop-rewrite"
+    "ro-crate": "*",
+    "sqlite": "^5.0.1",
+    "sqlite3": "^5.1.6"
   }
 }
