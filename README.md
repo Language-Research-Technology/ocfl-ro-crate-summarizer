@@ -46,6 +46,12 @@ make db
 Run Datasette
 
 ```
-make 
+make serve
 
+```
+
+All in one go
+
+```
+make all
 ```
