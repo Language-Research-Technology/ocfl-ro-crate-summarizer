@@ -13,7 +13,7 @@ db:
 
 
 serve:
-	datasette ocfl-summary.db --setting facet_suggest_time_limit_ms 5000 --setting facet_time_limit_ms 5000
+	datasette ocfl-summary.db --setting sql_time_limit_ms 15000 --setting facet_suggest_time_limit_ms 5000 --setting facet_time_limit_ms 5000
 
 
 all: ls db serve

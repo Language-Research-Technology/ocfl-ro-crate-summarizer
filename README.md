@@ -11,14 +11,27 @@ Install the node component
 npm install .
 ```
 
-Make a virtual environent and install the python part
+Make a virtual environment and install the python part
 ```
 rm -rf env
 python -m venv env
-. ./env/bin/activate
-pip install -r requirements.txt
+./env/bin/pip3 requirements.txt
 
 ```
+
+Fix a small bug in the RO-Crate python library:
+
+After this line:
+
+```
+parts = root_entity.pop('hasPart', [])
+```
+Add:
+
+```
+if not isinstance(parts, list):
+    parts = [parts]
+    
 
 ## Install Datasette
 
